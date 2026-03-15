@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Study Roulette</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="glass-panel" id="main-container">
+        <!-- Stage 1: Topic Selection -->
+        <div id="stage-topic" class="stage active">
+            <h1>What are we studying today?</h1>
+            <p class="subtitle">Let fate decide your next topic.</p>
+            
+            <div class="slot-machine">
+                <div class="slot-window">
+                    <ul class="slot-reel" id="slot-reel">
+                        <!-- Items injected by JS -->
+                    </ul>
+                </div>
+                <!-- Gradients for depth -->
+                <div class="slot-fade top-fade"></div>
+                <div class="slot-fade bottom-fade"></div>
+            </div>
+            
+            <button class="btn primary-btn glow-effect" id="btn-spin">Spin to Decide</button>
+        </div>
+
+        <!-- Stage 2: Time Selection -->
+        <div id="stage-time" class="stage hidden">
+            <h2>You rolled: <br><span id="selected-topic" class="highlight text-gradient">Anatomy</span></h2>
+            <p class="subtitle">How long do you want to study?</p>
+            
+            <div class="time-presets">
+                <button class="btn preset-btn" data-time="5">5 Min</button>
+                <button class="btn preset-btn" data-time="10">10 Min</button>
+                <button class="btn preset-btn" data-time="15">15 Min</button>
+                <button class="btn preset-btn" data-time="30">30 Min</button>
+                <button class="btn preset-btn" data-time="45">45 Min</button>
+            </div>
+            <button class="btn link-btn" id="btn-back-topic">Respin</button>
+        </div>
+
+        <!-- Stage 3: Timer -->
+        <div id="stage-timer" class="stage hidden">
+            <h2 id="active-topic" class="highlight text-gradient">Anatomy</h2>
+            
+            <div class="timers-container">
+                <div class="timer-card main-timer">
+                    <h3>Focus Time</h3>
+                    <svg class="progress-ring" width="200" height="200">
+                        <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="transparent" r="90" cx="100" cy="100"/>
+                        <circle class="progress-ring__circle" id="main-progress" stroke="url(#gradient-main)" stroke-width="8" fill="transparent" r="90" cx="100" cy="100"/>
+                        <defs>
+                            <linearGradient id="gradient-main" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#3b82f6" />
+                                <stop offset="100%" stop-color="#8b5cf6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="time-display" id="main-timer-display">15:00</div>
+                </div>
+
+                <div class="timer-card secondary-timer" id="desc-timer-container">
+                    <h3>Describe It!</h3>
+                    <p class="timer-hint">Briefly explain what you recall</p>
+                    <div class="time-display small" id="desc-timer-display">02:00</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="desc-progress"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn secondary-btn" id="btn-pause">Pause</button>
+                <button class="btn danger-btn" id="btn-cancel">End Session</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
