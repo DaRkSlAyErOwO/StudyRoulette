@@ -27,6 +27,7 @@ export default function Home() {
     const [descTimeTotal, setDescTimeTotal] = useState(120);
     const [sessionPhase, setSessionPhase] = useState("focus"); // "focus" or "describe"
     const [isPaused, setIsPaused] = useState(false);
+    const [hasStarted, setHasStarted] = useState(false);
     
     // Timer Interval
     const timerRef = useRef(null);
@@ -100,7 +101,8 @@ export default function Home() {
         setDescTimeTotal(descSecs);
         setDescTimeRemaining(descSecs);
         setSessionPhase("focus");
-        setIsPaused(false);
+        setHasStarted(false);
+        setIsPaused(true); // Technically paused until started
         setStage(2);
     };
 
@@ -147,6 +149,8 @@ export default function Home() {
         setMainTimeRemaining(0);
         setDescTimeRemaining(0);
         setSessionPhase("focus");
+        setHasStarted(false);
+        setIsPaused(false);
         if (timerRef.current) clearInterval(timerRef.current);
     };
 
@@ -318,13 +322,21 @@ export default function Home() {
                     </div>
                     
                     <div className="controls" style={{ flexWrap: 'wrap' }}>
-                        <button className="btn secondary-btn" onClick={handlePause}>
-                            {isPaused ? "Resume" : "Pause"}
-                        </button>
-                        {sessionPhase === "focus" && (
-                            <button className="btn secondary-btn" onClick={handleSkip}>Skip to Describe</button>
+                        {!hasStarted ? (
+                            <button className="btn primary-btn glow-effect" onClick={() => { setHasStarted(true); setIsPaused(false); }} style={{ fontSize: '1.2rem', padding: '1rem', width: '100%' }}>
+                                ▶ Start Focus Session
+                            </button>
+                        ) : (
+                            <>
+                                <button className="btn secondary-btn" onClick={handlePause}>
+                                    {isPaused ? "Resume" : "Pause"}
+                                </button>
+                                {sessionPhase === "focus" && (
+                                    <button className="btn secondary-btn" onClick={handleSkip}>Skip to Describe</button>
+                                )}
+                                <button className="btn danger-btn" onClick={handleCancel}>End Session</button>
+                            </>
                         )}
-                        <button className="btn danger-btn" onClick={handleCancel}>End Session</button>
                     </div>
                 </div>
             </div>
